@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fitnesssl/pages/company/company_page.dart';
 import 'package:fitnesssl/pages/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:fitnesssl/pages/messenger/chat_home.dart';
@@ -16,7 +17,8 @@ class AuthGate extends StatelessWidget {
           // user is logged in
           if (snapshot.hasData) {
             // return HomePage();
-            return const ChatHome();
+            // return const ChatHome();
+            return const CompanyPage();
           }
 
           // user is NOT logged in

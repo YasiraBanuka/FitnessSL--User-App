@@ -10,13 +10,13 @@ class MyBottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      backgroundColor: Color.fromARGB(
-          0, 69, 8, 8), // Set the background color to transparent
+      backgroundColor:
+          Colors.transparent, // Set the background color to transparent
       items: const [
         BottomNavigationBarItem(
           icon: Icon(
             Icons.home,
-            color: darkBlue,
+            color: grey,
             size: 30,
           ),
           label: 'Home',

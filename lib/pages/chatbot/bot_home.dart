@@ -26,7 +26,7 @@ class _BotHomeState extends State<BotHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFFE9E9E9),
+        backgroundColor: Colors.white,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios_outlined),
           color: Color(0xFF323232),
@@ -43,8 +43,8 @@ class _BotHomeState extends State<BotHome> {
           children: [
             Image.asset(
               'images/bot.png',
-              width: 40,
-              height: 40,
+              width: 50,
+              height: 50,
               // color: Color(0xFF008FA0),
               fit: BoxFit.cover,
             ),
@@ -53,13 +53,14 @@ class _BotHomeState extends State<BotHome> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'WonderSL ChatBot',
+                  'Fitty ChatBot',
                   style: TextStyle(
                     color: Color(0XFF323232),
-                    fontSize: 15,
+                    fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+                SizedBox(height: 4),
                 Row(
                   children: [
                     Icon(
@@ -82,9 +83,10 @@ class _BotHomeState extends State<BotHome> {
           ],
         ),
         centerTitle: false,
-        elevation: 0,
+        elevation: 1,
       ),
       body: Container(
+        color: Colors.white,
         child: Padding(
           padding: const EdgeInsets.only(right: 20, left: 20, bottom: 10),
           child: Column(
@@ -94,53 +96,51 @@ class _BotHomeState extends State<BotHome> {
                 child: MessagesScreen(messages: messages),
               ),
               SizedBox(height: 10),
+
               // message typing space
               Material(
-                elevation: 5.0,
                 borderRadius: BorderRadius.circular(20),
                 child: Container(
-                  padding: EdgeInsets.all(10),
+                  padding:
+                      EdgeInsets.only(top: 8, bottom: 8, left: 20, right: 10),
                   decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(30),
+                    color: Color(0xFFF2F8FF),
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color: Colors.black54,
+                    ),
                   ),
                   child: Row(
+                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
                         child: TextField(
                           controller: _controller,
                           decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: "Type your message here",
+                            hintText: "Chat with me...",
                             hintStyle: TextStyle(color: Colors.black45),
                           ),
+                          style: TextStyle(color: Colors.black87),
                         ),
                       ),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Color(0xFFf3f3f3),
-                          borderRadius: BorderRadius.circular(60),
-                        ),
-                        child: Center(
-                          child: IconButton(
-                            onPressed: () {
-                              sendMessage(_controller.text);
-                              _controller.clear();
-                            },
-                            icon: Icon(Icons.send),
-                            color: Color.fromARGB(255, 204, 200, 200),
-                          ),
-                        ),
-                      )
+                      IconButton(
+                        onPressed: () {
+                          sendMessage(_controller.text);
+                          _controller.clear();
+                        },
+                        icon: Icon(Icons.send),
+                        iconSize: 28,
+                        color: Color.fromARGB(255, 97, 95, 95),
+                      ),
                     ],
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),
       ),
-      // bottomNavigationBar: const bottomNavigationBar(),
     );
   }
 

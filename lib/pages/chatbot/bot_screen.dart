@@ -1,3 +1,4 @@
+import 'package:fitnesssl/constants.dart';
 import 'package:flutter/material.dart';
 
 class MessagesScreen extends StatefulWidget {
@@ -43,12 +44,23 @@ class _MessagesScreenState extends State<MessagesScreen> {
                           Radius.circular(message['isUserMessage'] ? 20 : 0),
                     ),
                     color: message['isUserMessage']
-                        ? Color.fromARGB(255, 211, 228, 243)
+                        ? darkBlue
                         : Color.fromARGB(255, 234, 236, 240),
+                    border: Border.all(
+                      color: message['isUserMessage']
+                          ? darkBlue
+                          : Colors.transparent,
+                    ),
                   ),
                   constraints: BoxConstraints(maxWidth: w * 2 / 3),
                   child: Text(
                     message['message'].text.text[0],
+                    style: TextStyle(
+                      color: message['isUserMessage']
+                          ? Colors.white
+                          : Colors.black,
+                      fontSize: 14,
+                    ),
                   ),
                 ),
               ],

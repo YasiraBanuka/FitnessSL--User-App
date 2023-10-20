@@ -27,6 +27,9 @@ class MyApp extends StatelessWidget {
         primaryColor: darkBlue,
         secondaryHeaderColor: darkBlue,
         scaffoldBackgroundColor: darkBlue,
+        navigationBarTheme: const NavigationBarThemeData(
+          backgroundColor: darkBlue,
+        ),
         textTheme: Theme.of(context).textTheme.apply(bodyColor: white),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),

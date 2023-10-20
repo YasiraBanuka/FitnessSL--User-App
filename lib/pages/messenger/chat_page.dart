@@ -115,7 +115,7 @@ class _ChatPageState extends State<ChatPage> {
         //   ],
         // ),
         title: Text(
-          'Shawn Jones',
+          widget.agentName,
           textAlign: TextAlign.center,
           style: TextStyle(
             color: Colors.white,
@@ -194,8 +194,8 @@ class _ChatPageState extends State<ChatPage> {
     bool isSentMessage = (data['senderId'] == _firebaseAuth.currentUser!.uid);
 
     // Define colors for sent and received messages
-    Color sentMessageColor = Color(0xFF008FA0).withOpacity(0.2);
-    Color receivedMessageColor = Color.fromARGB(224, 204, 222, 255);
+    Color sentMessageColor = Color(0xFFC1DFFF);
+    Color receivedMessageColor = Color(0xFFFBB731);
 
     // Determine the background color for the message container
     Color messageBackgroundColor =
@@ -271,6 +271,7 @@ class _ChatPageState extends State<ChatPage> {
                     hintText: "Type your message here...",
                     hintStyle: TextStyle(color: Color(0xFF5C5C5C)),
                   ),
+                  style: TextStyle(color: Colors.black87),
                 ),
               ),
               IconButton(

@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fitnesssl/components/bottom_navbar.dart';
+import 'package:fitnesssl/components/my_bottom_nav_bar.dart';
 import 'package:fitnesssl/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:fitnesssl/pages/chatbot/bot_home.dart';
@@ -53,6 +55,7 @@ class _ChatHomeState extends State<ChatHome> {
           fit: BoxFit.cover,
         ),
       ),
+      bottomNavigationBar: MyBottomNavBar(),
     );
   }
 
@@ -151,7 +154,7 @@ class _ChatHomeState extends State<ChatHome> {
                   style: TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.w500,
-                    fontSize: 16.0,
+                    fontSize: 18.0,
                   ),
                 ),
                 SizedBox(height: 4),
