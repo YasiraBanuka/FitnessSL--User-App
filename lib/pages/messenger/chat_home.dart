@@ -1,0 +1,173 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fitnesssl/constants.dart';
+import 'package:flutter/material.dart';
+import 'package:fitnesssl/pages/chatbot/bot_home.dart';
+import 'package:fitnesssl/pages/messenger/chat_page.dart';
+
+class ChatHome extends StatefulWidget {
+  const ChatHome({super.key});
+
+  @override
+  State<ChatHome> createState() => _ChatHomeState();
+}
+
+class _ChatHomeState extends State<ChatHome> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: darkBlue,
+      // Appbar section
+      appBar: AppBar(
+        backgroundColor: darkBlue,
+        title: Text(
+          'Messenger',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 26.0,
+            fontWeight: FontWeight.w700,
+            letterSpacing: -0.52,
+          ),
+        ),
+        centerTitle: true,
+        automaticallyImplyLeading: false,
+        elevation: 0,
+      ),
+      // body section
+      body: _buildAgentList(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => BotHome(),
+            ),
+          );
+        },
+        // backgroundColor: Color.fromARGB(255, 165, 230, 236),
+        backgroundColor: yellow,
+        child: Image.asset(
+          'images/bot.png',
+          width: 40,
+          height: 40,
+          fit: BoxFit.cover,
+        ),
+      ),
+    );
+  }
+
+  // build a list of agents
+  Widget _buildAgentList() {
+    return StreamBuilder<QuerySnapshot>(
+      stream: FirebaseFirestore.instance.collection('company').snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return const Text('error');
+        }
+
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Padding(
+            padding: const EdgeInsets.only(top: 10.0, left: 10.0),
+            child: const Text('loading.....'),
+          );
+        }
+
+        return ListView(
+          children: snapshot.data!.docs
+              .map<Widget>((doc) => _buildAgentListItem(doc))
+              .toList(),
+        );
+      },
+    );
+  }
+
+  // build individual agent list item
+  Widget _buildAgentListItem(DocumentSnapshot document) {
+    Map<String, dynamic> data = document.data() as Map<String, dynamic>;
+
+    // Get the first letter of the agent's name
+    String agentName = data['c_name'];
+    String firstLetter = agentName[0].toUpperCase();
+
+    // Define the image container
+    Container imageContainer = Container(
+      width: 60,
+      height: 60,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        // color: Colors.blue, // image container color
+        color: yellow,
+      ),
+      alignment: Alignment.center,
+      child: Text(
+        firstLetter,
+        style: TextStyle(
+          // color: Colors.white,
+          color: Colors.black45,
+          fontSize: 28,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+
+    // Return the entire agent list item with image to the left
+    return InkWell(
+      onTap: () {
+        // Navigate to the chat page with agent details
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ChatPage(
+              agentEmail: data['c_email'],
+              agentId: data['cid'],
+              agentName: data['c_name'],
+            ),
+          ),
+        );
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          // color: Colors.white,
+          color: Color(0xFFC1DFFF),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        margin: EdgeInsets.only(
+            top: 20.0,
+            bottom: 0,
+            left: 20.0,
+            right: 20.0), // Add margin for spacing between agents
+        padding: EdgeInsets.all(10), // Add padding inside the container
+        child: Row(
+          children: [
+            // Display the image container to the left
+            imageContainer,
+            SizedBox(width: 20), // Add spacing between the image and text
+            // Display agent name
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  data['c_name'],
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 16.0,
+                  ),
+                ),
+                SizedBox(height: 4),
+                Text(
+                  data['c_email'],
+                  style: TextStyle(
+                    color: Colors.black45,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14.0,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
