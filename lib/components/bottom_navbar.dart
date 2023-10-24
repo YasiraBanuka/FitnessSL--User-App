@@ -1,55 +1,79 @@
-import 'package:flutter/material.dart';
-import 'package:ionicons/ionicons.dart';
+import 'package:fitnesssl/constants.dart';
+import 'package:fitnesssl/pages/home/home_screen.dart';
 import 'package:fitnesssl/pages/messenger/chat_home.dart';
+import 'package:flutter/material.dart';
 
-class bottomNavigationBar extends StatelessWidget {
-  const bottomNavigationBar({Key? key}) : super(key: key);
+class BottomNavBar extends StatefulWidget {
+  const BottomNavBar({super.key});
+
+  @override
+  State<BottomNavBar> createState() => _BottomNavBarState();
+}
+
+class _BottomNavBarState extends State<BottomNavBar> {
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+
+      switch (_selectedIndex) {
+        case 0:
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => HomePage(),
+            ),
+          );
+          break;
+        case 3:
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => ChatHome(),
+            ),
+          );
+          break;
+        default:
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      type: BottomNavigationBarType.fixed,
+      backgroundColor: darkBlue,
       showSelectedLabels: false,
       showUnselectedLabels: false,
+      iconSize: 30,
+      type: BottomNavigationBarType.fixed,
+      currentIndex: _selectedIndex,
+      onTap: _onItemTapped,
       items: const [
         BottomNavigationBarItem(
-          icon: Icon(Ionicons.home_outline, color: Color(0xFF526480)),
-          activeIcon: Icon(Ionicons.home_outline, color: Color(0xFF526480)),
-          label: "Home",
+          icon: Icon(Icons.home_outlined, color: grey),
+          activeIcon: Icon(Icons.home_filled, color: yellow),
+          label: 'Home',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Ionicons.location_outline),
-          label: "Map",
+          icon: Icon(Icons.calendar_today_outlined, color: grey),
+          activeIcon: Icon(Icons.calendar_today, color: yellow),
+          label: 'Calendar',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Ionicons.bookmark_outline),
-          label: "Bookmark",
+          icon: Icon(Icons.analytics_outlined, color: grey),
+          activeIcon: Icon(Icons.analytics_rounded, color: yellow),
+          label: 'Analytics',
         ),
         BottomNavigationBarItem(
-          icon: Icon(
-            Ionicons.chatbubble_ellipses_outline,
-            color: Color(0xFF526480),
-          ),
-          activeIcon: Icon(
-            Ionicons.chatbox_ellipses,
-            color: Color(0xFF008FA0),
-          ), // Correct icon name
-          label: "Messenger",
+          icon: Icon(Icons.forum_outlined, color: grey),
+          activeIcon: Icon(Icons.forum_rounded, color: yellow),
+          label: 'Messenger',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Ionicons.person_outline),
-          label: "Profile",
+          icon: Icon(Icons.person_outline, color: grey),
+          activeIcon: Icon(Icons.person, color: yellow),
+          label: 'Profiles',
         ),
       ],
-      onTap: (int index) {
-        // Check if the "Messenger" item is tapped (index 3) and navigate to the MessengerPage
-        if (index == 3) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => ChatHome()),
-          );
-        }
-      },
     );
   }
 }

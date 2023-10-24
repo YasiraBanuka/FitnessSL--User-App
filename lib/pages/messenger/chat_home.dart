@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitnesssl/components/bottom_navbar.dart';
-import 'package:fitnesssl/components/my_bottom_nav_bar.dart';
 import 'package:fitnesssl/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:fitnesssl/pages/chatbot/bot_home.dart';
@@ -55,7 +54,8 @@ class _ChatHomeState extends State<ChatHome> {
           fit: BoxFit.cover,
         ),
       ),
-      bottomNavigationBar: MyBottomNavBar(),
+      // bottomNavigationBar: MyBottomNavBar(),
+      bottomNavigationBar: BottomNavBar(),
     );
   }
 
@@ -69,9 +69,15 @@ class _ChatHomeState extends State<ChatHome> {
         }
 
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Padding(
-            padding: const EdgeInsets.only(top: 10.0, left: 10.0),
-            child: const Text('loading.....'),
+          // return Padding(
+          //   padding: const EdgeInsets.only(top: 10.0, left: 10.0),
+          //   child: const Text('loading.....'),
+          // );
+          return Center(
+            child: CircularProgressIndicator(
+              color: yellow,
+              semanticsLabel: 'Loading...',
+            ),
           );
         }
 

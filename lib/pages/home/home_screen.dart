@@ -1,4 +1,4 @@
-import 'package:fitnesssl/components/my_bottom_nav_bar.dart';
+import 'package:fitnesssl/components/bottom_navbar.dart';
 import 'package:fitnesssl/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -26,7 +26,7 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: MyBottomNavBar(),
+      bottomNavigationBar: BottomNavBar(),
     );
   }
 }

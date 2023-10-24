@@ -164,7 +164,13 @@ class _ChatPageState extends State<ChatPage> {
         }
 
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Text('Loading....');
+          // return const Text('Loading....');
+          return Center(
+            child: CircularProgressIndicator(
+              color: yellow,
+              semanticsLabel: 'Loading...',
+            ),
+          );
         }
 
         return ListView(
