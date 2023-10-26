@@ -1,14 +1,15 @@
 import 'package:fitnesssl/components/textFields/login_text_field.dart';
 import 'package:fitnesssl/constants.dart';
+import 'package:fitnesssl/pages/auth/register_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:fitnesssl/services/auth/auth_service.dart';
 
 class LoginPage extends StatefulWidget {
-  final void Function()? onTap;
+  // final void Function()? onTap;
   const LoginPage({
     super.key,
-    required this.onTap,
+    // required this.onTap,
   });
 
   @override
@@ -124,6 +125,7 @@ class _LoginPageState extends State<LoginPage> {
                   ],
                 ),
                 const SizedBox(height: 20),
+
                 // login button
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 1,
@@ -156,7 +158,13 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     SizedBox(width: 10),
                     GestureDetector(
-                      onTap: widget.onTap,
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(
+                          builder: (context) {
+                            return const RegisterPage();
+                          },
+                        ));
+                      },
                       child: const Text(
                         "Sign Up",
                         style: TextStyle(

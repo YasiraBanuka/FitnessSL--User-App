@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:fitnesssl/constants.dart';
 import 'package:fitnesssl/pages/auth/login_page.dart';
 import 'package:flutter/material.dart';
 
@@ -9,124 +10,23 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final DatabaseReference _database = FirebaseDatabase.instance.reference();
-  Map<String, dynamic> userData = {};
-  String? profileImageUrl;
-
-  @override
-  void initState() {
-    super.initState();
-    _fetchUserData();
-  }
-
-  Future<void> _fetchUserData() async {
-    final User? user = _auth.currentUser;
-    final String? userId = user?.uid;
-
-    DatabaseEvent snapshot =
-        await _database.child('users').child(userId!).once();
-
-    Map<dynamic, dynamic>? snapshotValue =
-        snapshot.snapshot.value as Map<dynamic, dynamic>?;
-
-    if (snapshotValue != null) {
-      setState(() {
-        userData = Map<String, dynamic>.from(snapshotValue);
-
-        profileImageUrl = userData['profileImageUrl'];
-      });
-    }
-  }
-
-  Future<String?> _fetchNIC() async {
-    final User? user = _auth.currentUser;
-    final String? userId = user?.uid;
-
-    DatabaseEvent snapshot =
-        await _database.child('users').child(userId!).child('nic').once();
-
-    return snapshot.snapshot.value as String?;
-  }
-
-  Future<String?> _fetchEmail() async {
-    final User? user = _auth.currentUser;
-    final String? userId = user?.uid;
-
-    DatabaseEvent snapshot =
-        await _database.child('users').child(userId!).child('email').once();
-
-    return snapshot.snapshot.value as String?;
-  }
-
-  Future<void> _deleteProfileAndLogout() async {
-    final User? user = _auth.currentUser;
-
-    if (user != null) {
-      final bool? deleteConfirmed = await showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Confirm Deletion'),
-            content: const Text(
-                'Are you sure you want to delete your account? This action cannot be undone.'),
-            actions: <Widget>[
-              TextButton(
-                child: const Text('Cancel'),
-                onPressed: () {
-                  Navigator.of(context).pop(false);
-                },
-              ),
-              TextButton(
-                child: const Text('Yes'),
-                onPressed: () {
-                  Navigator.of(context).pop(true);
-                },
-              ),
-            ],
-          );
-        },
-      );
-
-      if (deleteConfirmed == true) {
-        try {
-          await _database.child('users').child(user.uid).remove();
-          await user.delete();
-          await _auth.signOut();
-
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(
-              builder: (context) => const Text("login page"),
-            ),
-          );
-        } catch (e) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Error deleting profile: $e'),
-            ),
-          );
-        }
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        title: const Padding(
-          padding: EdgeInsets.only(
-            left: 60,
-          ),
-          child: Text(
-            "Personal Data",
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-            ),
+        backgroundColor: darkBlue,
+        title: Text(
+          'Messenger',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 26.0,
+            fontWeight: FontWeight.w700,
+            letterSpacing: -0.52,
           ),
         ),
+        centerTitle: true,
+        automaticallyImplyLeading: false,
+        elevation: 0,
       ),
       body: Container(
         padding: const EdgeInsets.only(
@@ -149,7 +49,9 @@ class _ProfileState extends State<Profile> {
                   ),
                   child: CircleAvatar(
                     radius: 85,
-                    backgroundImage: NetworkImage(profileImageUrl!),
+                    backgroundImage: const AssetImage(
+                      'images/profile.png',
+                    ),
                   ),
                 ),
               ],
@@ -182,7 +84,6 @@ class _ProfileState extends State<Profile> {
                       ),
                       child: ListTile(
                         title: FutureBuilder<String?>(
-                          future: _fetchNIC(),
                           builder: (context, snapshot) {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
@@ -205,7 +106,7 @@ class _ProfileState extends State<Profile> {
                               );
                             } else {
                               return Text(
-                                ' ${userData['firstName'] ?? ''} ${userData['lastName'] ?? ''}',
+                                'firstName lastName',
                                 style: const TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
@@ -234,7 +135,6 @@ class _ProfileState extends State<Profile> {
                       ),
                       child: ListTile(
                         title: FutureBuilder<String?>(
-                          future: _fetchEmail(),
                           builder: (context, snapshot) {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
@@ -257,7 +157,7 @@ class _ProfileState extends State<Profile> {
                               );
                             } else {
                               return Text(
-                                '${snapshot.data}',
+                                'Email',
                                 style: const TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
@@ -376,7 +276,7 @@ class _ProfileState extends State<Profile> {
             Row(
               children: [
                 ElevatedButton(
-                  onPressed: _deleteProfileAndLogout,
+                  onPressed: () {},
                   style: ElevatedButton.styleFrom(
                     primary: const Color.fromARGB(255, 255, 17, 0),
                     padding: const EdgeInsets.symmetric(

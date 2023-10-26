@@ -34,7 +34,7 @@ class _ChatHomeState extends State<ChatHome> {
         elevation: 0,
       ),
       // body section
-      body: _buildAgentList(),
+      body: _buildCompanyList(),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -45,7 +45,6 @@ class _ChatHomeState extends State<ChatHome> {
             ),
           );
         },
-        // backgroundColor: Color.fromARGB(255, 165, 230, 236),
         backgroundColor: yellow,
         child: Image.asset(
           'images/bot.png',
@@ -54,13 +53,12 @@ class _ChatHomeState extends State<ChatHome> {
           fit: BoxFit.cover,
         ),
       ),
-      // bottomNavigationBar: MyBottomNavBar(),
       bottomNavigationBar: BottomNavBar(),
     );
   }
 
-  // build a list of agents
-  Widget _buildAgentList() {
+  // build a list of companies
+  Widget _buildCompanyList() {
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance.collection('company').snapshots(),
       builder: (context, snapshot) {
@@ -83,18 +81,18 @@ class _ChatHomeState extends State<ChatHome> {
 
         return ListView(
           children: snapshot.data!.docs
-              .map<Widget>((doc) => _buildAgentListItem(doc))
+              .map<Widget>((doc) => _buildCompanyListItem(doc))
               .toList(),
         );
       },
     );
   }
 
-  // build individual agent list item
-  Widget _buildAgentListItem(DocumentSnapshot document) {
+  // build individual company list item
+  Widget _buildCompanyListItem(DocumentSnapshot document) {
     Map<String, dynamic> data = document.data() as Map<String, dynamic>;
 
-    // Get the first letter of the agent's name
+    // Get the first letter of the company's name
     String agentName = data['c_name'];
     String firstLetter = agentName[0].toUpperCase();
 
@@ -104,7 +102,6 @@ class _ChatHomeState extends State<ChatHome> {
       height: 60,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        // color: Colors.blue, // image container color
         color: yellow,
       ),
       alignment: Alignment.center,
@@ -119,10 +116,10 @@ class _ChatHomeState extends State<ChatHome> {
       ),
     );
 
-    // Return the entire agent list item with image to the left
+    // Return the entire company list item with image to the left
     return InkWell(
       onTap: () {
-        // Navigate to the chat page with agent details
+        // Navigate to the chat section
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -151,7 +148,7 @@ class _ChatHomeState extends State<ChatHome> {
             // Display the image container to the left
             imageContainer,
             SizedBox(width: 20), // Add spacing between the image and text
-            // Display agent name
+            // Display company name & email
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
