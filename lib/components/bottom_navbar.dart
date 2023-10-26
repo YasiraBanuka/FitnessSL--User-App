@@ -1,7 +1,7 @@
 import 'package:fitnesssl/constants.dart';
+import 'package:fitnesssl/pages/company/companies_page.dart';
 import 'package:fitnesssl/pages/home/home_screen.dart';
 import 'package:fitnesssl/pages/messenger/chat_home.dart';
-import 'package:fitnesssl/pages/user/profile_page.dart';
 import 'package:fitnesssl/pages/user/settings_page.dart';
 import 'package:flutter/material.dart';
 
@@ -24,6 +24,13 @@ class _BottomNavBarState extends State<BottomNavBar> {
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => HomePage(),
+            ),
+          );
+          break;
+        case 2:
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => CompaniesPage(),
             ),
           );
           break;

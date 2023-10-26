@@ -1,16 +1,29 @@
 import 'package:fitnesssl/constants.dart';
 import 'package:fitnesssl/pages/home/home_screen.dart';
 import 'package:fitnesssl/pages/messenger/chat_home.dart';
+import 'package:fitnesssl/pages/messenger/chat_page.dart';
 import 'package:flutter/material.dart';
 
-class CompanyPage extends StatefulWidget {
-  const CompanyPage({super.key});
+class CompanyDetailsPage extends StatefulWidget {
+  final String companyId;
+  final String companyName;
+  final String companyEmail;
+  final String companyAddress;
+  final String companyPhone;
+  const CompanyDetailsPage({
+    super.key,
+    required this.companyId,
+    required this.companyName,
+    required this.companyEmail,
+    required this.companyAddress,
+    required this.companyPhone,
+  });
 
   @override
-  State<CompanyPage> createState() => _CompanyPageState();
+  State<CompanyDetailsPage> createState() => _CompanyDetailsPageState();
 }
 
-class _CompanyPageState extends State<CompanyPage> {
+class _CompanyDetailsPageState extends State<CompanyDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,8 +31,9 @@ class _CompanyPageState extends State<CompanyPage> {
       // Appbar section
       appBar: AppBar(
         backgroundColor: darkBlue,
+        // company name
         title: Text(
-          'BodyDoc Gym',
+          widget.companyName,
           style: TextStyle(
             color: Colors.white,
             fontSize: 24.0,
@@ -67,6 +81,7 @@ class _CompanyPageState extends State<CompanyPage> {
             Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
+                // address
                 Row(
                   children: [
                     Icon(
@@ -76,7 +91,7 @@ class _CompanyPageState extends State<CompanyPage> {
                     ),
                     SizedBox(width: 10),
                     Text(
-                      "No. 24, Athurugiriya Road, Malabe",
+                      widget.companyAddress,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 18,
@@ -86,6 +101,7 @@ class _CompanyPageState extends State<CompanyPage> {
                   ],
                 ),
                 SizedBox(height: 10),
+                // phone
                 Row(
                   children: [
                     Icon(
@@ -95,7 +111,7 @@ class _CompanyPageState extends State<CompanyPage> {
                     ),
                     SizedBox(width: 10),
                     Text(
-                      "011 222 2200 / 077 222 7788",
+                      widget.companyPhone,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 18,
@@ -105,6 +121,7 @@ class _CompanyPageState extends State<CompanyPage> {
                   ],
                 ),
                 SizedBox(height: 10),
+                // email
                 Row(
                   children: [
                     Icon(
@@ -114,7 +131,7 @@ class _CompanyPageState extends State<CompanyPage> {
                     ),
                     SizedBox(width: 10),
                     Text(
-                      "contact@bodydoc.lk",
+                      widget.companyEmail,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 18,
@@ -132,6 +149,7 @@ class _CompanyPageState extends State<CompanyPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                // events button
                 GestureDetector(
                   onTap: () {},
                   child: Container(
@@ -173,7 +191,11 @@ class _CompanyPageState extends State<CompanyPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => ChatHome(),
+                        builder: (context) => ChatPage(
+                          agentId: widget.companyId,
+                          agentEmail: widget.companyEmail,
+                          agentName: widget.companyName,
+                        ),
                       ),
                     );
                   },

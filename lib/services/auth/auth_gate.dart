@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fitnesssl/pages/company/company_page.dart';
+import 'package:fitnesssl/pages/company/company_details_page.dart';
 import 'package:fitnesssl/pages/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:fitnesssl/pages/messenger/chat_home.dart';
