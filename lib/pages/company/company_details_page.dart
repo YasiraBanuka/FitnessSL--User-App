@@ -1,4 +1,6 @@
+import 'package:fitnesssl/components/bottom_navbar.dart';
 import 'package:fitnesssl/constants.dart';
+import 'package:fitnesssl/pages/company/companies_page.dart';
 import 'package:fitnesssl/pages/home/home_screen.dart';
 import 'package:fitnesssl/pages/messenger/chat_home.dart';
 import 'package:fitnesssl/pages/messenger/chat_page.dart';
@@ -48,7 +50,7 @@ class _CompanyDetailsPageState extends State<CompanyDetailsPage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => HomePage(), // navigate to all gym page
+                builder: (context) => CompaniesPage(),
               ),
             );
           },
@@ -219,6 +221,7 @@ class _CompanyDetailsPageState extends State<CompanyDetailsPage> {
           ],
         ),
       ),
+      bottomNavigationBar: BottomNavBar(),
     );
   }
 }

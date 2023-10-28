@@ -39,10 +39,13 @@ class _CompaniesPageState extends State<CompaniesPage> {
     );
   }
 
-  // build a list of companies
+  // build a list of companies (in alphabetical order)
   Widget _buildCompanyList() {
     return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance.collection('company').snapshots(),
+      stream: FirebaseFirestore.instance
+          .collection('company')
+          .orderBy('c_name')
+          .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return const Text('error');
@@ -122,7 +125,7 @@ class _CompaniesPageState extends State<CompaniesPage> {
           borderRadius: BorderRadius.circular(20),
         ),
         margin: EdgeInsets.only(
-            top: 20.0,
+            top: 10.0,
             bottom: 0,
             left: 20.0,
             right: 20.0), // Add margin for spacing between agents

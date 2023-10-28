@@ -60,7 +60,10 @@ class _ChatHomeState extends State<ChatHome> {
   // build a list of companies
   Widget _buildCompanyList() {
     return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance.collection('company').snapshots(),
+      stream: FirebaseFirestore.instance
+          .collection('company')
+          .orderBy('c_name')
+          .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return const Text('error');
@@ -103,13 +106,14 @@ class _ChatHomeState extends State<ChatHome> {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: yellow,
+        // color: darkBlue,
       ),
       alignment: Alignment.center,
       child: Text(
         firstLetter,
         style: TextStyle(
-          // color: Colors.white,
-          color: Colors.black45,
+          color: darkBlue,
+          // color: Colors.black45,
           fontSize: 28,
           fontWeight: FontWeight.bold,
         ),
@@ -138,7 +142,7 @@ class _ChatHomeState extends State<ChatHome> {
           borderRadius: BorderRadius.circular(20),
         ),
         margin: EdgeInsets.only(
-            top: 20.0,
+            top: 10.0,
             bottom: 0,
             left: 20.0,
             right: 20.0), // Add margin for spacing between agents
@@ -147,6 +151,7 @@ class _ChatHomeState extends State<ChatHome> {
           children: [
             // Display the image container to the left
             imageContainer,
+
             SizedBox(width: 20), // Add spacing between the image and text
             // Display company name & email
             Column(
