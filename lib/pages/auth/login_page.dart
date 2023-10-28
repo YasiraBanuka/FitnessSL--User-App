@@ -1,6 +1,7 @@
 import 'package:fitnesssl/components/textFields/login_text_field.dart';
 import 'package:fitnesssl/constants.dart';
 import 'package:fitnesssl/pages/auth/register_page.dart';
+import 'package:fitnesssl/pages/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:fitnesssl/services/auth/auth_service.dart';
@@ -32,6 +33,12 @@ class _LoginPageState extends State<LoginPage> {
       await authService.signInWithEmailandPassword(
         emailController.text,
         passwordController.text,
+      );
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => HomePage(),
+        ),
       );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
